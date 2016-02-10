@@ -1,3 +1,13 @@
+function loadShaders(vs_path, fs_path) {
+	var vs_source, fs_source;
+	var jvs = jQuery.get(vs_path, function(data){ vs_source = data; }),
+		jfs = jQuery.get(fs_path, function(data){ fs_source = data; });
+	return $.when(jvs, jfs).done(function() {
+			var program = compileProgram(vs_source, fs_source);
+			if (program) gl.useProgram(program);
+		});
+}
+
 function compileProgram(vs_source, fs_source)
 {
 	var vs = compileShader(vs_source, gl.VERTEX_SHADER),

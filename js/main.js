@@ -11,7 +11,6 @@ function main()
     //gl.depthFunc(gl.LEQUAL);
 
 	var renderer = new Renderer();
-	if (!renderer.initProgram()) return null;
 }
 
 function initWebGL(canvas)

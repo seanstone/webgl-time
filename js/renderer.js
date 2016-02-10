@@ -7,23 +7,15 @@ function Renderer() {
 		iMouseUniform;
 	var vertexPositionAttribute, vertexPositionBuffer;
 
-	// Load shaders
-	var vs_source, fs_source;
-	var jvs = jQuery.get('glsl/seascape.vs', function(data){ vs_source = data; }),
-		jfs = jQuery.get('glsl/seascape.fs', function(data){ fs_source = data; });
-	$.when(jvs, jfs).done(function() {
-			initProgram();
-			initBuffers();
-			start();
-		});
+	loadShaders('glsl/seascape.vs', 'glsl/seascape.fs').done(function() {
+		shaderProgram = program;
+		initShaderVars();
+		initAttribBuffers();
+		start();
+	});
 
-	function initProgram()
+	function initShaderVars()
 	{
-		// Compile program
-		shaderProgram = compileProgram(vs_source, fs_source);
-		if (shaderProgram) gl.useProgram(shaderProgram);
-		else return null;
-
 		// Init uniforms
 		iResolutionUniform = gl.getUniformLocation(shaderProgram, "iResolution");
 		iGlobalTimeUniform = gl.getUniformLocation(shaderProgram, "iGlobalTime");
@@ -34,18 +26,18 @@ function Renderer() {
 		gl.enableVertexAttribArray(vertexPositionAttribute);
 	}
 
-	function initBuffers()
+	function initAttribBuffers()
 	{
 		vertexPositionBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
 
-		var vertices = [
+		var vertices = new Float32Array ([
 	    	1.0,  1.0,  0.0,
 	    	-1.0, 1.0,  0.0,
 	    	1.0,  -1.0, 0.0,
 	    	-1.0, -1.0, 0.0
-	  	];
-	  	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+	  	]);
+	  	gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 	}
 
 	function start()
