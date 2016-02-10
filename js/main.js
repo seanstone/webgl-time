@@ -7,10 +7,8 @@ function main()
 	gl = initWebGL(canvas);
 	if(!gl) return null;
 
-    //gl.enable(gl.DEPTH_TEST);
-    //gl.depthFunc(gl.LEQUAL);
-
 	var renderer = new Renderer();
+	renderer.init().done(function(){renderer.start();})
 }
 
 function initWebGL(canvas)
@@ -23,6 +21,6 @@ function initWebGL(canvas)
  	} catch(e) {}
 
 
-	if (!gl) alert("Unable to initialize WebGL. Your browser may not support it.");
+	if (!gl) document.write("</br>Unable to initialize WebGL.</br>");
   	return gl;
 }

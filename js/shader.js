@@ -3,8 +3,11 @@ function loadShaders(vs_path, fs_path) {
 	var jvs = jQuery.get(vs_path, function(data){ vs_source = data; }),
 		jfs = jQuery.get(fs_path, function(data){ fs_source = data; });
 	return $.when(jvs, jfs).done(function() {
-			var program = compileProgram(vs_source, fs_source);
-			if (program) gl.useProgram(program);
+			this.program = compileProgram(vs_source, fs_source);
+			if(this.program) {
+				gl.useProgram(this.program);
+				console.log("Shaders loaded successfully");
+			}
 		});
 }
 
@@ -13,13 +16,15 @@ function compileProgram(vs_source, fs_source)
 	var vs = compileShader(vs_source, gl.VERTEX_SHADER),
 		fs = compileShader(fs_source, gl.FRAGMENT_SHADER);
 
-	program = gl.createProgram();
+	var program = gl.createProgram();
 	gl.attachShader(program, vs);
 	gl.attachShader(program, fs);
 	gl.linkProgram(program);
 
-	if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-    	alert("Failed to compile shader program: " + gl.getProgramInfoLog(shader));
+	if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+		document.write("</br>Failed to compile shader program:</br>" + gl.getProgramInfoLog(program) + "</br>");
+		return null;
+	}
 
 	console.log("Shader program compiled");
 	return program;
@@ -32,7 +37,7 @@ function compileShader(source, type) {
   	gl.compileShader(shader);
 
   	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-    	alert("Failed to compile shader: " + gl.getShaderInfoLog(shader));
+    	document.write("</br>Failed to compile shader:</br>" + gl.getShaderInfoLog(shader) + "</br>");
 
 	console.log("Shader compiled: " + type);
   	return shader;
