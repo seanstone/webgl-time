@@ -80,7 +80,7 @@ function Renderer()
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 		// Uniforms
-		gl.uniform3f(iResolutionUniform, $("#glCanvas").width(), $("#glCanvas").height(), $("#glCanvas").width()*1.0/$("#glCanvas").height());
+		gl.uniform3f(iResolutionUniform, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.drawingBufferWidth*1.0/gl.drawingBufferHeight);
 		gl.uniform1f(iGlobalTimeUniform, seconds);
 		gl.uniform4f(iMouseUniform, 0, 0, 0, 0); // TODO
 

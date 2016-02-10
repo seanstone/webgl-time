@@ -1,13 +1,15 @@
 var gl; // A global variable for the WebGL context
+var canvas;
+var renderer;
 
 function main()
 {
 	// Initialize the GL context
-	var canvas = document.getElementById("glCanvas");
+	canvas = document.getElementById("glCanvas");
 	gl = initWebGL(canvas);
 	if(!gl) return null;
 
-	var renderer = new Renderer();
+	renderer = new Renderer();
 	renderer.init().done(function(){renderer.start();})
 }
 
@@ -20,7 +22,14 @@ function initWebGL(canvas)
 		gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
  	} catch(e) {}
 
+	updateCanvasSize(canvas);
 
 	if (!gl) document.write("</br>Unable to initialize WebGL.</br>");
   	return gl;
+}
+
+function updateCanvasSize(canvas)
+{
+	canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+	gl.viewport(0, 0, canvas.clientWidth, canvas.clientHeight);
 }
