@@ -140,7 +140,7 @@ vec3 getNormal(vec3 p, float eps) {
     return normalize(n);
 }
 
-float heightMapTracing(vec3 ori, vec3 dir, out vec3 p) {
+float heightMapTracing(vec3 ori, vec3 dir, vec3 p) {
     float tm = 0.0;
     float tx = 1000.0;
     float hx = map(ori + dir * tx);
@@ -163,7 +163,7 @@ float heightMapTracing(vec3 ori, vec3 dir, out vec3 p) {
 }
 
 // main
-vec4 mainImage( in vec4 fragCoord ) {
+vec4 mainImage( vec4 fragCoord ) {
 	vec2 uv = fragCoord.xy / iResolution.xy;
     uv = uv * 2.0 - 1.0;
     uv.x *= iResolution.x / iResolution.y;

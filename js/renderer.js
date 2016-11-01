@@ -15,7 +15,7 @@ function Renderer()
 	{
 		initAttribBuffers();
 		initOptions();
-		return loadShaders('glsl/shadertoy.vs', 'glsl/seascape.fs').done(function() {
+		return loadShaders('glsl/shadertoy.vs', 'glsl/simple.fs').done(function() {
 				shaderProgram = this.program;
 				if(shaderProgram) initShaderVars();
 			});

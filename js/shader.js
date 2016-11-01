@@ -1,10 +1,10 @@
-function loadShaders(vs_path, fs_path) {
+function loadShaders(vs_path, fs_path)
+{
 	var vs_source, fs_source;
 	var jvs = jQuery.get(vs_path, function(data){ vs_source = data; }),
 		jfs = jQuery.get(fs_path, function(data){ fs_source = data; });
 	return $.when(jvs, jfs).done(function() {
-			this.program = compileProgram(vs_source, fs_source);
-			if(this.program) {
+			if(this.program = compileProgram(vs_source, fs_source)) {
 				gl.useProgram(this.program);
 				console.log("Shaders loaded successfully");
 			}
@@ -30,8 +30,8 @@ function compileProgram(vs_source, fs_source)
 	return program;
 }
 
-function compileShader(source, type) {
-
+function compileShader(source, type)
+{
     var	shader = gl.createShader(type); // VERTEX_SHADER or FRAGMENT_SHADER
   	gl.shaderSource(shader, source);
   	gl.compileShader(shader);
